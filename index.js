@@ -8,15 +8,21 @@ var app = express();
 ///connect to the database 
 mongoose.connect('mongodb://localhost/restApi');
 mongoose.Promise = global.Promise
-///use body-parser as middleware
 
+///serve the static pagesti
+app.use(express.static('public'));
+
+///use body-parser as middleware
 app.use(bodyParser.json());
 
-/////use route
+////route Middleware
 app.use('/api', routes);
 
-
-
+///error handling
+app.use((err, req, res, next)=>{
+    console.log(err)
+    res.status(422).send({error: err.message})
+})
 
 app.listen(process.env.port || 8080, function (){
     console.log('listening on port 8080');

@@ -1,9 +1,20 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 
 ////create schema
 
 const Schema = mongoose.Schema
+
+const GeoShema = new Schema({
+    type: {
+        type:String,
+        default: "Points"
+    }, 
+    coordinate: {
+        type: [Number],
+        index: '2dsphere'
+    }
+})
 
 const NinjaSchema = new Schema({
     name: {
@@ -17,7 +28,8 @@ const NinjaSchema = new Schema({
     available:{
         type:Boolean,
         default:false
-    }
+    },
+    geometry: GeoShema
 })
 
 ///create a model
